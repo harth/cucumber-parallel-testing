@@ -2,5 +2,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>uk.co.hmtt</groupId>
     <artifactId>cucumber-parallel-testing</artifactId>
+    <packaging>pom</packaging>
     <version>1</version>
+    <modules>
+        <module>cucumber-parallel-testing-core</module>
+    </modules>
 </project>
