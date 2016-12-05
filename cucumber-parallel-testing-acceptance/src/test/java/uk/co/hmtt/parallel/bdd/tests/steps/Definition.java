@@ -9,9 +9,9 @@ import java.util.Date;
 
 public class Definition {
 
-    Integer delay;
-    Date startTime;
-    Date finishTime;
+    private Integer delay;
+    private Date startTime;
+    private Date finishTime;
 
     @Given("^a test that takes (\\d+) seconds to execute$")
     public void a_test_that_takes_seconds_to_execute(int second) throws Throwable {

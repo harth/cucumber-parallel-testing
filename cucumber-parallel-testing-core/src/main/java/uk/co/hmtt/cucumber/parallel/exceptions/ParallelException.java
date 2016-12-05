@@ -1,4 +1,4 @@
-package parallel.exceptions;
+package uk.co.hmtt.cucumber.parallel.exceptions;
 
 public class ParallelException extends RuntimeException {
 

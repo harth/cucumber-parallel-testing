@@ -1,9 +1,9 @@
-package parallel.model;
+package uk.co.hmtt.cucumber.parallel.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class RecorderWrapper {
+public class Recorder {
 
     private Set<String> features = new HashSet<>();
 

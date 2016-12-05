@@ -2,7 +2,7 @@ package uk.co.hmtt.parallel.bdd.runner;
 
 import cucumber.api.CucumberOptions;
 import org.junit.runner.RunWith;
-import parallel.runner.ParallelCucumber;
+import uk.co.hmtt.cucumber.parallel.runner.ParallelCucumber;
 
 @RunWith(ParallelCucumber.class)
 @CucumberOptions(glue = {"uk.co.hmtt.parallel.bdd.tests"},
