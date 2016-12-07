@@ -15,21 +15,24 @@ public class ParallelCucumber extends Cucumber {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ParallelCucumber.class);
 
-    final SynchronisedFile<Recorder> synchronisedFile = new SynchronisedFile<>();
+    private SynchronisedFile<Recorder> synchronisedFile;
 
     public ParallelCucumber(Class clazz) throws InitializationError, IOException {
         super(clazz);
+        synchronisedFile = new SynchronisedFile<>();
     }
 
     @Override
     protected void runChild(FeatureRunner child, RunNotifier notifier) {
 
+        LOGGER.debug("Acquiring lock");
         final Recorder read = synchronisedFile.read(Recorder.class);
 
         if (!read.getFeatures().contains(child.getName())) {
             LOGGER.debug("Feature file not already processed");
             read.getFeatures().add(child.getName());
             synchronisedFile.write(read);
+            LOGGER.debug("Updated record and released lock. About to run test");
             child.run(notifier);
         } else {
             LOGGER.debug("Feature file already processed; releasing lock");

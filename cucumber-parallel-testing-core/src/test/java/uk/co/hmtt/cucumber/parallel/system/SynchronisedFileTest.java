@@ -2,23 +2,20 @@ package uk.co.hmtt.cucumber.parallel.system;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import uk.co.hmtt.cucumber.parallel.Constants;
 import uk.co.hmtt.cucumber.parallel.model.Recorder;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.channels.OverlappingFileLockException;
 import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class SynchronisedFileTest {
 

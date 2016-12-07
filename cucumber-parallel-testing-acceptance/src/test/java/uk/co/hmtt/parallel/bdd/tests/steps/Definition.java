@@ -7,29 +7,33 @@ import cucumber.api.java.en.When;
 import java.util.Calendar;
 import java.util.Date;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+
 public class Definition {
 
-    private Integer delay;
+    private Long delay;
     private Date startTime;
     private Date finishTime;
 
     @Given("^a test that takes (\\d+) seconds to execute$")
     public void a_test_that_takes_seconds_to_execute(int second) throws Throwable {
-        delay = second * 1000;
+        delay = Long.valueOf(second);
     }
 
     @When("^I execute the test$")
     public void i_execute_the_test() throws Throwable {
         startTime = Calendar.getInstance().getTime();
-        Thread.sleep(delay);
+        Thread.sleep(delay * 1000);
         finishTime = Calendar.getInstance().getTime();
     }
 
-    @Then("^it should take at least (\\d+) seconds$")
-    public void it_should_take_at_least_seconds(int seconds) throws Throwable {
-        final long startTimeSeconds = startTime.getTime() / 60;
-        final long finishTimeSeconds = finishTime.getTime() / 60;
-//        assertThat(new Integer(finishTimeSeconds - startTimeSeconds), is(greaterThan(seconds)));
+    @Then("^it should take at least the execution time to complete$")
+    public void it_should_take_at_least_the_execution_time_to_complete() throws Throwable {
+        final long startTimeSeconds = startTime.getTime() / 1000;
+        final long finishTimeSeconds = finishTime.getTime() / 1000;
+        assertThat(finishTimeSeconds - startTimeSeconds, is(greaterThanOrEqualTo(Long.valueOf(delay))));
     }
 
 

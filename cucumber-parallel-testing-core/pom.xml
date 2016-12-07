@@ -138,13 +138,9 @@
                     </execution>
                 </executions>
                 <configuration>
-
                     <targetClasses>
                         <param>uk.co.hmtt*</param>
                     </targetClasses>
-                    <!--<targetTests>-->
-                        <!--<param>com.your.package.root*</param>-->
-                    <!--</targetTests>-->
                 </configuration>
             </plugin>
         </plugins>

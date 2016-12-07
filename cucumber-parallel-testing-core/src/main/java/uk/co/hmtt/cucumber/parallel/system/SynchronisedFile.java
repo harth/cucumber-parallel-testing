@@ -16,26 +16,25 @@ public class SynchronisedFile<T> {
 
         Folder.create(Constants.PARALLEL_WORKING_DIR);
         try {
-            rw = new RandomAccessFile(Constants.PARALLEL_WORKING_DIR + clz.getName() + ".lock", "rw");
-            rw.getChannel().lock();
+            if (rw == null) {
+                rw = new RandomAccessFile(Constants.PARALLEL_WORKING_DIR + clz.getName() + ".lock", "rw");
+                rw.getChannel().lock();
+            }
 
             return (rw.length() == 0) ?
                     createNewSynchronizedObject(clz) :
                     objectMapper.readValue(rw.readUTF(), clz);
 
-        } catch (IOException e) {
+        } catch (IOException | IllegalAccessException | InstantiationException e) {
             throw new ParallelException(e);
         }
+
     }
 
-    private T createNewSynchronizedObject(Class<T> clz)  {
-        try {
+    private T createNewSynchronizedObject(Class<T> clz) throws IllegalAccessException, InstantiationException, IOException {
             final T response = clz.newInstance();
             rw.writeUTF(objectMapper.writeValueAsString(response));
             return response;
-        } catch (IOException | InstantiationException  | IllegalAccessException e) {
-            throw new ParallelException(e);
-        }
     }
 
     public void write(T obj) {
@@ -51,6 +50,7 @@ public class SynchronisedFile<T> {
     public void release() {
         try {
             rw.getChannel().close();
+            rw = null;
         } catch (IOException e) {
             throw new ParallelException(e);
         }
